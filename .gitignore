@@ -1,0 +1,6 @@
+*.DS_Store
+*._bak
+*.bak
+/.settings/*
+/target/
+/WebContent/WEB-INF/classes/*
