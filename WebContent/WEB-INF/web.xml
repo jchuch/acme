@@ -6,6 +6,7 @@
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
+
 	<servlet>
 		<description></description>
 		<display-name>LoginController</display-name>
@@ -28,6 +29,19 @@
 		<servlet-name>AccessController</servlet-name>
 		<url-pattern>/AccessController</url-pattern>
 	</servlet-mapping>
+
+
+	<servlet>
+		<description></description>
+		<display-name>LevelController</display-name>
+		<servlet-name>LevelController</servlet-name>
+		<servlet-class>acme.controller.LevelController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>LevelController</servlet-name>
+		<url-pattern>/LevelController</url-pattern>
+	</servlet-mapping>
+
 
 	<filter>
 		<filter-name>AuthFilter</filter-name>

@@ -23,23 +23,34 @@
 <title>ACME Home - Welcome</title>
 </head>
 <body>
-	<div>
-		<label>Welcome : <%= user.getUsername() %></label>
-		<a href="${pageContext.request.contextPath}/logout.jsp"/>Logout</a>
-	</div>
-	<div>
-		<form xxaction="${pageContext.request.contextPath}/AccessController" method="post">
-			<table >
-			<tr>
-				<td><label>Commands</label></td>
-				<td><textarea name="sqlcommand"></textarea></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="Run" /></td>
-			</tr>
-			</table>
-		</form>
-	</div>
+	<table >
+	<tr>
+		<td>
+			<div>
+				<label>Welcome : <%= user.getUsername() %></label>
+			</div>
+		</td>
+		<td>
+			<a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>
+				<form action="${pageContext.request.contextPath}/AccessController" method="post">
+					<table >
+					<tr>
+						<td><label>Commands</label></td>
+						<td><textarea name="sqlcommand"></textarea></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Run" /></td>
+					</tr>
+					</table>
+				</form>
+			</div>
+		</td>
+	</tr>
 </body>
 </html>

@@ -8,7 +8,6 @@
 		request.getSession().removeAttribute("error");
 	}
 
-
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -17,25 +16,37 @@
 <title>ACME Login</title>
 </head>
 <body>
-	<form action="${pageContext.request.contextPath}/LoginController" method="post">
-		<div><label>Welcome</label></div>
-		<table >
-		<tr>
-			<td colspan="2"><%= errorMsg %></td>
-		</tr>
-		<tr>
-			<td>Enter username : </td>
-			<td><input type="text" name="username"></td>
-		</tr>
-		<tr>
-			<td>Enter password : </td>
-			<td><input type="password" name="password"></td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><input type="submit" value="Login" /></td>
-		</tr>
-		</table>
-	</form>
+	<table >
+	<tr>
+		<td>
+			<div><label>Welcome</label></div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div>
+				<form action="${pageContext.request.contextPath}/LoginController" method="post">
+					<table >
+					<tr>
+						<td colspan="2"><%= errorMsg %></td>
+					</tr>
+					<tr>
+						<td>Enter username : </td>
+						<td><input type="text" name="username"></td>
+					</tr>
+					<tr>
+						<td>Enter password : </td>
+						<td><input type="password" name="password"></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="submit" value="Login" /></td>
+					</tr>
+					</table>
+				</form>
+			</div>
+		</td>
+	</tr>
+	</table>
 </body>
 </html>

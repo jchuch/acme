@@ -23,11 +23,10 @@ public class AuthFilter implements Filter {
 	public void init(FilterConfig config) throws ServletException {
 
 		// Get init parameter
-		String testParam = config.getInitParameter("test-param");
+		//String testParam = config.getInitParameter("test-param");
 
 		//Print the init parameter
-		//System.out.println("Test Param: " + testParam);
-		LOG.debug("Test Param: " + testParam);
+		//LOG.debug("Test Param: " + testParam);
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response,
@@ -39,7 +38,7 @@ public class AuthFilter implements Filter {
 		// Log the IP address and current timestamp.
 		LOG.debug("IP "+ ipAddress + ", Time " + new Date().toString());
 
-		LOG.debug("chain="+chain+" , request="+request+" , response="+response);
+		//LOG.debug("chain="+chain+" , request="+request+" , response="+response);
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
@@ -47,11 +46,11 @@ public class AuthFilter implements Filter {
 				req.getSession().getAttribute("user")!=null) {
 
 			String reqUrl = req.getRequestURL()!=null ? req.getRequestURL().toString() : null;
-			LOG.debug("reqUrl="+reqUrl);
+			//LOG.debug("reqUrl="+reqUrl);
 
 
 			String ctxPath = req.getContextPath();
-			LOG.debug("ctxPath="+ctxPath);
+			//LOG.debug("ctxPath="+ctxPath);
 
 
 			boolean isValidPath = false;
@@ -73,10 +72,6 @@ public class AuthFilter implements Filter {
 				}
 
 			}
-
-
-
-			//user.getAdmin()
 
 
 			if (isValidPath) {

@@ -20,10 +20,8 @@ public class Authenticator {
 	}
 
 	public User authenticate(String username, String password) {
-
 		User user = null;
 		try(Connection conn = DBConnector.getConnection()) {
-			//conn = DBConnector.getConnection();
 			String sql = "select id, username, level, admin from user where username = ? and password = ?";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				ps.setString(1, username);
@@ -47,7 +45,6 @@ public class Authenticator {
 			LOG.error("authenticate error!", e);
 			user = null;
 		}
-
 		return user;
 	}
 
