@@ -1,7 +1,7 @@
 package acme.dbmodel;
 
-public class Table {
-	
+public class TableSecurity {
+
 	private int id;
 	private String name;
 	private String level;
@@ -13,7 +13,7 @@ public class Table {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getname() {
+	public String getName() {
 		return name;
 	}
 	public void setName(String name) {

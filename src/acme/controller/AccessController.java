@@ -2,6 +2,7 @@ package acme.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import acme.dao.TableSecurityDAO;
+import acme.dbmodel.TableSecurity;
 import acme.dbmodel.User;
 
 public class AccessController extends HttpServlet {
@@ -18,15 +21,9 @@ public class AccessController extends HttpServlet {
 	private static final Logger LOG = LoggerFactory.getLogger("acme");
 
 	private static final long serialVersionUID = 1L;
-	
-	public ArrayList<String> securityLevelIndex;
 
-	public char[][] securityLevelMatrix; 
-
-	public AccessController() {
-		super();
-		
-		securityLevelIndex = new ArrayList<String>();
+	public static final ArrayList<String> securityLevelIndex = new ArrayList<String>();
+	static {
 		securityLevelIndex.add("G");
 		securityLevelIndex.add("H");
 		securityLevelIndex.add("F");
@@ -35,28 +32,30 @@ public class AccessController extends HttpServlet {
 		securityLevelIndex.add("HE");
 		securityLevelIndex.add("FE");
 		securityLevelIndex.add("L");
-		
-		/*
-		the first dimension represents user security level, the second dimension represents table security level;
-		return l represents that the user's security level is higher than the table's security level;
-		s for lower
-		e for equal;
-		i for incompatible;
-		*/
-		
-		securityLevelMatrix = new char[][]{
-	  { 'e', 's', 's', 's', 's', 's', 's', 's'},
-	  { 'l', 'e', 'i', 'i', 's', 's', 'i', 's'},
-	  { 'l', 'i', 'e', 'i', 's', 'i', 's', 's'},
-	  { 'l', 'i', 'i', 'e', 'i', 's', 's', 's'},
-	  { 'l', 'l', 'l', 'i', 'e', 'i', 'i', 's'},
-	  { 'l', 'l', 'i', 'l', 'i', 'e', 'i', 's'},
-	  { 'l', 'i', 'l', 'l', 'i', 'i', 'e', 's'},
-	  { 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'e'}
-	};
-		
-		
 	}
+
+	/*
+	the first dimension represents user security level, the second dimension represents table security level;
+	return l represents that the user's security level is higher than the table's security level;
+	s for lower
+	e for equal;
+	i for incompatible;
+	*/
+	private static final char[][] securityLevelMatrix = new char[][]{
+		  { 'e', 's', 's', 's', 's', 's', 's', 's'},
+		  { 'l', 'e', 'i', 'i', 's', 's', 'i', 's'},
+		  { 'l', 'i', 'e', 'i', 's', 'i', 's', 's'},
+		  { 'l', 'i', 'i', 'e', 'i', 's', 's', 's'},
+		  { 'l', 'l', 'l', 'i', 'e', 'i', 'i', 's'},
+		  { 'l', 'l', 'i', 'l', 'i', 'e', 'i', 's'},
+		  { 'l', 'i', 'l', 'l', 'i', 'i', 'e', 's'},
+		  { 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'e'}
+	};
+
+	public AccessController() {
+		super();
+	}
+
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
@@ -72,46 +71,74 @@ public class AccessController extends HttpServlet {
 		LOG.debug("user level="+level);
 
 
-		// if add_g button clicked
-		String add_g = request.getParameter("add_g");
-		if (add_g!=null && add_g.length()>0) {
-			LOG.debug("add_g clicked!");
+		TableSecurityDAO tableSecDao = new TableSecurityDAO();
+
+
+		String tableSecId = "0";
+		int action = 0; // no action
+		// action : 1 = select
+		// action : 2 = insert
+
+
+		Map<String, String[]> parameters = request.getParameterMap();
+		for(String parameter : parameters.keySet()) {
+			LOG.debug("parameter="+parameter);
+
+			if(parameter.toLowerCase().startsWith("select_")) {
+
+				tableSecId = parameter.substring("select_".length(), parameter.length());
+				LOG.debug("tableSecId="+tableSecId);
+
+				action = 1;
+
+				break;
+
+			} else if (parameter.toLowerCase().startsWith("update_")) {
+
+				tableSecId = parameter.substring("update_".length(), parameter.length());
+				LOG.debug("tableSecId="+tableSecId);
+
+				action = 2;
+
+				break;
+
+			}
+
 		}
 
-		// if update_g button clicked
-		String update_g = request.getParameter("update_g");
-		if (update_g!=null && update_g.length()>0) {
-			LOG.debug("update_g clicked!");
-		}
 
-		// TODO: check other buttons
-
-
+		TableSecurity tableSec = tableSecDao.getTableSecurity(Integer.parseInt(tableSecId));
+		String tableLevel = tableSec.getLevel();
 
 
 		// TODO: check access
-		
-		String userLevel;
-		String tableLevel;
-		String operation;
-		
-		int indexUserLevel = securityLevelIndex.indexOf(userLevel);
+
+		int indexUserLevel = securityLevelIndex.indexOf(level);
 		int indexTableLevel = securityLevelIndex.indexOf(tableLevel);
 		char queryResult = securityLevelMatrix[indexUserLevel][indexTableLevel];
-		
-		if(operation == "select"&& (queryResult == 'l' || queryResult == 'e')){
-			//seccuss operation
+
+		String errMsg = "";
+
+
+		// select
+		if(action == 1 && (queryResult == 'l' || queryResult == 'e')){
+			//success operation
+
+			errMsg = "Operation Success!";
 		}
-		else if(operation == "insert" && (queryResult == 's' || queryResult == 'e')){
-			//seccuss operation
+		// insert
+		else if(action == 2 && (queryResult == 's' || queryResult == 'e')){
+			//success operation
+
+			errMsg = "Operation Success!";
 		}
 		else {
 			//deny,log,inform user
-			request.getSession().setAttribute("error", "Operation failed!");
+			errMsg = "Operation Failed!";
 			LOG.debug("user operation denied!");
 		}
-			
-		
+
+		request.getSession().setAttribute("error", errMsg);
 
 		response.sendRedirect(request.getContextPath()+"/home/welcome.jsp");
 	}

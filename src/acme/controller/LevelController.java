@@ -30,8 +30,8 @@ public class LevelController extends HttpServlet {
 		int errorCount = 0;
 		Map<String, String[]> parameters = request.getParameterMap();
 		for(String parameter : parameters.keySet()) {
+			//LOG.debug("parameter="+parameter);
 		    if(parameter.toLowerCase().startsWith("level_")) {
-		    	LOG.debug("parameter="+parameter);
 
 		    	String userIdStr = parameter.substring("level_".length(), parameter.length());
 		    	LOG.debug("userIdStr="+userIdStr);
@@ -54,9 +54,9 @@ public class LevelController extends HttpServlet {
 
 		    }
 		} // END, for
-		
-		
-		
+
+
+
 
 		// if error found
 		if (errorCount>0) {
