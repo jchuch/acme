@@ -54,6 +54,9 @@ public class LevelController extends HttpServlet {
 
 		    }
 		} // END, for
+		
+		
+		
 
 		// if error found
 		if (errorCount>0) {
