@@ -33,11 +33,22 @@
 	<tr>
 		<td>
 			<div>
-				<label>Welcome : <%= user.getUsername() %></label>
+				<table >
+				<tr>
+					<td>
+						<label>Welcome : <%= user.getUsername() %></label>
+					</td>
+					<td>
+						<button><a href="${pageContext.request.contextPath}/logout.jsp">Logout</a></button>
+					</td>
+				</tr>
+				</table>
 			</div>
 		</td>
+	</tr>
+	<tr>
 		<td>
-			<a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
+			<div><p><%= errorMsg %>&nbsp;</p></div>
 		</td>
 	</tr>
 	<tr>
@@ -86,7 +97,8 @@
 
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Update" /></td>
+						<td></td>
+						<td align="right"><input type="submit" value="Update" /></td>
 					</tr>
 					</table>
 				</form>

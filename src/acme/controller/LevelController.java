@@ -36,15 +36,7 @@ public class LevelController extends HttpServlet {
 		    	String userIdStr = parameter.substring("level_".length(), parameter.length());
 		    	LOG.debug("userIdStr="+userIdStr);
 
-//		        String[] values = parameters.get(parameter);
-//		        //your code here
-//
-//		        if (values!=null) {
-//		        	for (String s : values) {
-//		        		LOG.debug("s="+s);
-//		        	}
-//		        }
-
+		        //String[] values = parameters.get(parameter);
 		        //LOG.debug("values="+values);
 
 		        String level = request.getParameter(parameter);
@@ -66,6 +58,8 @@ public class LevelController extends HttpServlet {
 		// if error found
 		if (errorCount>0) {
 			request.getSession().setAttribute("error", "Update failed!");
+		} else {
+			request.getSession().setAttribute("error", "Update success!");
 		}
 
 		response.sendRedirect(request.getContextPath()+"/admin/dashboard.jsp");

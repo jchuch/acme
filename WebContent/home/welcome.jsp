@@ -27,11 +27,22 @@
 	<tr>
 		<td>
 			<div>
-				<label>Welcome : <%= user.getUsername() %></label>
+				<table >
+				<tr>
+					<td>
+						<label>Welcome : <%= user.getUsername() %></label>
+					</td>
+					<td>
+						<button><a href="${pageContext.request.contextPath}/logout.jsp">Logout</a></button>
+					</td>
+				</tr>
+				</table>
 			</div>
 		</td>
+	</tr>
+	<tr>
 		<td>
-			<a href="${pageContext.request.contextPath}/logout.jsp">Logout</a>
+			<div><p><%= errorMsg %>&nbsp;</p></div>
 		</td>
 	</tr>
 	<tr>
@@ -40,17 +51,58 @@
 				<form action="${pageContext.request.contextPath}/AccessController" method="post">
 					<table >
 					<tr>
-						<td><label>Commands</label></td>
-						<td><textarea name="sqlcommand"></textarea></td>
+						<td><label>General</label></td>
+						<td><input type="submit" name="add_g" value="Add" /></td>
+						<td><input type="submit" name="update_g" value="Update" /></td>
 					</tr>
+					<tr>
+						<td><label>Engineer</label></td>
+						<td><input type="submit" name="add_e" value="Add" /></td>
+						<td><input type="submit" name="update_e" value="Update" /></td>
+					</tr>
+					<tr>
+						<td><label>Finance</label></td>
+						<td><input type="submit" name="add_f" value="Add" /></td>
+						<td><input type="submit" name="update_f" value="Update" /></td>
+					</tr>
+					<tr>
+						<td><label>Human Resource</label></td>
+						<td><input type="submit" name="add_hr" value="Add" /></td>
+						<td><input type="submit" name="update_hr" value="Update" /></td>
+					</tr>
+					<tr>
+						<td><label>Human Resource / Engineer</label></td>
+						<td><input type="submit" name="add_he" value="Add" /></td>
+						<td><input type="submit" name="update_he" value="Update" /></td>
+					</tr>
+					<tr>
+						<td><label>Human Resource / Finance</label></td>
+						<td><input type="submit" name="add_hf" value="Add" /></td>
+						<td><input type="submit" name="update_hf" value="Update" /></td>
+					</tr>
+					<tr>
+						<td><label>Finance / Engineer</label></td>
+						<td><input type="submit" name="add_fe" value="Add" /></td>
+						<td><input type="submit" name="update_fe" value="Update" /></td>
+					</tr>
+					<tr>
+						<td><label>Leader</label></td>
+						<td><input type="submit" name="add_l" value="Add" /></td>
+						<td><input type="submit" name="update_l" value="Update" /></td>
+					</tr>
+
+					<!--
 					<tr>
 						<td></td>
 						<td><input type="submit" value="Run" /></td>
 					</tr>
+					-->
+
 					</table>
 				</form>
 			</div>
 		</td>
 	</tr>
+	</table>
 </body>
 </html>

@@ -19,7 +19,14 @@
 	<table >
 	<tr>
 		<td>
-			<div><label>Welcome</label></div>
+			<div>
+				<label>Welcome</label>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div><p><%= errorMsg %>&nbsp;</p></div>
 		</td>
 	</tr>
 	<tr>
@@ -28,19 +35,16 @@
 				<form action="${pageContext.request.contextPath}/LoginController" method="post">
 					<table >
 					<tr>
-						<td colspan="2"><%= errorMsg %></td>
-					</tr>
-					<tr>
-						<td>Enter username : </td>
+						<td><label>Enter username :</label></td>
 						<td><input type="text" name="username"></td>
 					</tr>
 					<tr>
-						<td>Enter password : </td>
+						<td><label>Enter password :</label></td>
 						<td><input type="password" name="password"></td>
 					</tr>
 					<tr>
 						<td></td>
-						<td><input type="submit" value="Login" /></td>
+						<td align="right"><input type="submit" value="Login" /></td>
 					</tr>
 					</table>
 				</form>
