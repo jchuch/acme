@@ -11,16 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import acme.dao.TableSecurityDAO;
 import acme.dao.UserDAO;
-import acme.dbmodel.User;
+import acme.dbmodel.TableSecurity;
 
-public class LevelController extends HttpServlet {
+public class TableLevelController extends HttpServlet {
 
 	private static final Logger LOG = LoggerFactory.getLogger("acme");
 
 	private static final long serialVersionUID = 1L;
 
-	public LevelController() {
+	public TableLevelController() {
 		super();
 	}
 
@@ -33,8 +34,8 @@ public class LevelController extends HttpServlet {
 			//LOG.debug("parameter="+parameter);
 		    if(parameter.toLowerCase().startsWith("level_")) {
 
-		    	String userIdStr = parameter.substring("level_".length(), parameter.length());
-		    	LOG.debug("userIdStr="+userIdStr);
+		    	String tableSecIdStr = parameter.substring("level_".length(), parameter.length());
+		    	LOG.debug("tableSecIdStr="+tableSecIdStr);
 
 		        //String[] values = parameters.get(parameter);
 		        //LOG.debug("values="+values);
@@ -42,12 +43,12 @@ public class LevelController extends HttpServlet {
 		        String level = request.getParameter(parameter);
 		        LOG.debug("level="+level);
 
-		        User user = new User();
-		        user.setId(Integer.parseInt(userIdStr));
-		        user.setLevel(level);
+		        TableSecurity tableSec = new TableSecurity();
+		        tableSec.setId(Integer.parseInt(tableSecIdStr));
+		        tableSec.setLevel(level);
 
-		        UserDAO userDao = new UserDAO();
-		        boolean isUpdateSuccess = userDao.updateLevel(user);
+		        TableSecurityDAO tableSecDao = new TableSecurityDAO();
+		        boolean isUpdateSuccess = tableSecDao.updateLevel(tableSec);
 		        if (!isUpdateSuccess) {
 		        	errorCount++;
 		        }
@@ -65,7 +66,7 @@ public class LevelController extends HttpServlet {
 			request.getSession().setAttribute("error", "Update success!");
 		}
 
-		response.sendRedirect(request.getContextPath()+"/admin/maintain_user.jsp");
+		response.sendRedirect(request.getContextPath()+"/admin/maintain_table_security.jsp");
 	}
 
 

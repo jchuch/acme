@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.util.*,acme.dao.UserDAO,acme.dbmodel.User,acme.util.*" %>
+<%@ page import="java.util.*,acme.dao.TableSecurityDAO,acme.dbmodel.TableSecurity,acme.dbmodel.User,acme.util.*" %>
 <%
 	// Only admin / SO can access
 
@@ -15,15 +15,15 @@
 		user = (User)request.getSession().getAttribute("user");
 	}
 
-	//UserDAO userDao = new UserDAO();
-	//List<User> ls = userDao.getList();
+	TableSecurityDAO tableSecDao = new TableSecurityDAO();
+	List<TableSecurity> ls = tableSecDao.getList();
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ACME Admin - Dashboard</title>
+<title>ACME Admin - Maintain Table Security</title>
 <script type="javascript">
 
 </script>
@@ -54,40 +54,25 @@
 	<tr>
 		<td>
 			<div>
-				<a href="maintain_user.jsp">Maintain Users</a>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div>
-				<a href="maintain_table_security.jsp">Maintain Table Security</a>
-			</div>
-		</td>
-	</tr>
-<%--
-	<tr>
-		<td>
-			<div>
-				<form action="${pageContext.request.contextPath}/LevelController" method="post">
+				<form action="${pageContext.request.contextPath}/TableLevelController" method="post">
 					<table >
 					<tr>
 						<th><label>Id</label></th>
-						<th><label>Username</label></th>
+						<th><label>Name</label></th>
 						<th><label>Level</label></th>
 					</tr>
 
 					<%
 					String[] levelOptions = { "G", "E", "F", "H", "HE", "HF", "FE", "L" };
 
-					for(User userObj : ls) {
-						String level = userObj.getLevel();
+					for(TableSecurity tableSecObj : ls) {
+						String level = tableSecObj.getLevel();
 					%>
 					<tr>
-						<td><label><%= userObj.getId() %></label></td>
-						<td><label><%= userObj.getUsername() %></label></td>
+						<td><label><%= tableSecObj.getId() %></label></td>
+						<td><label><%= tableSecObj.getName() %></label></td>
 						<td>
-							<select name="level_<%= userObj.getId() %>">
+							<select name="level_<%= tableSecObj.getId() %>">
 								<option value="">-</option>
 								<%
 								String selected = "";
@@ -120,7 +105,6 @@
 			</div>
 		</td>
 	</tr>
---%>
 	</table>
 </body>
 </html>

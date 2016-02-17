@@ -53,6 +53,35 @@ public class UserDAO {
 	}
 
 
+	public List<User> getListWithoutAdmin() {
+		List<User> ls = new ArrayList<User>();
+		try(Connection conn = DBConnector.getConnection()) {
+			String sql = "select id, username, level, admin from user where admin = 'N'";
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+
+				ResultSet rs = ps.executeQuery();
+				while(rs.next()) {
+					User user = new User();
+					user.setId(rs.getInt("id"));
+					user.setUsername(rs.getString("username"));
+					user.setLevel(rs.getString("level"));
+					user.setAdmin("Y".equals(rs.getString("admin")));
+					ls.add(user);
+				}
+				rs.close();
+
+			} catch(SQLException sqle) {
+				throw sqle;
+			}
+
+		} catch(SQLException e) {
+			LOG.error("getList error!", e);
+			//throw e;
+		}
+		return ls;
+	}
+
+
 	public boolean updateLevel(User user) {//throws SQLException
 		boolean isUpdateSuccess = false;
 		try(Connection conn = DBConnector.getConnection()) {

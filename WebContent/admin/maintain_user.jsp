@@ -15,15 +15,15 @@
 		user = (User)request.getSession().getAttribute("user");
 	}
 
-	//UserDAO userDao = new UserDAO();
-	//List<User> ls = userDao.getList();
+	UserDAO userDao = new UserDAO();
+	List<User> ls = userDao.getListWithoutAdmin();
 
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ACME Admin - Dashboard</title>
+<title>ACME Admin - Maintain User</title>
 <script type="javascript">
 
 </script>
@@ -51,21 +51,6 @@
 			<div><p><%= errorMsg %>&nbsp;</p></div>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<div>
-				<a href="maintain_user.jsp">Maintain Users</a>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div>
-				<a href="maintain_table_security.jsp">Maintain Table Security</a>
-			</div>
-		</td>
-	</tr>
-<%--
 	<tr>
 		<td>
 			<div>
@@ -120,7 +105,6 @@
 			</div>
 		</td>
 	</tr>
---%>
 	</table>
 </body>
 </html>
