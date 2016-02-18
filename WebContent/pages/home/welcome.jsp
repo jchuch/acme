@@ -81,7 +81,7 @@
 			<td><label><%= tableSec.getLevel() %></label></td>
 			<td>
 				<input type="submit" name="select_<%= tableSec.getId() %>" value="Select" />
-				<input type="submit" name="update_<%= tableSec.getId() %>" value="Update" />
+				<input type="submit" name="insert_<%= tableSec.getId() %>" value="Insert" />
 			</td>
 		</tr>
 		<%

@@ -94,9 +94,9 @@ public class AccessController extends HttpServlet {
 
 				break;
 
-			} else if (parameter.toLowerCase().startsWith("update_")) {
+			} else if (parameter.toLowerCase().startsWith("insert_")) {
 
-				tableSecId = parameter.substring("update_".length(), parameter.length());
+				tableSecId = parameter.substring("insert_".length(), parameter.length());
 				LOG.debug("tableSecId="+tableSecId);
 
 				action = 2;
@@ -113,9 +113,17 @@ public class AccessController extends HttpServlet {
 
 
 		// TODO: check access
+		/*System.out.println("user level:" + level);
+		System.out.println("table level:" + tableLevel);*/
+		
 
 		int indexUserLevel = securityLevelIndex.indexOf(level);
 		int indexTableLevel = securityLevelIndex.indexOf(tableLevel);
+		
+		
+		/*System.out.println("index of user level:" + indexUserLevel);
+		System.out.println("index of table level:" + indexTableLevel);*/
+
 
 		Message msg = new Message();
 		try {
