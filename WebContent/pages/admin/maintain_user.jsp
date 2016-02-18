@@ -71,9 +71,10 @@
 		<form action="${pageContext.request.contextPath}/UserLevelController" method="post" role="form">
 		<table class="table table-striped">
 		<tr>
-			<th><label>Id</label></th>
-			<th><label>Username</label></th>
-			<th><label>Level</label></th>
+			<th class="col-md-2"><label>Id</label></th>
+			<th class="col-md-6"><label>Username</label></th>
+			<th class="col-md-2"><label>Level</label></th>
+			<th class="col-md-2"></th>
 		</tr>
 		<%
 		String[] levelOptions = { "G", "E", "F", "H", "HE", "HF", "FE", "L" };
@@ -85,7 +86,7 @@
 			<td><label><%= userObj.getId() %></label></td>
 			<td><label><%= userObj.getUsername() %></label></td>
 			<td>
-				<select name="level_<%= userObj.getId() %>">
+				<select class="form-control" name="level_<%= userObj.getId() %>">
 					<option value="">-</option>
 					<%
 					String selected = "";
@@ -103,6 +104,7 @@
 
 				</select>
 			</td>
+			<td></td>
 		</tr>
 		<%
 		} // END, for
@@ -111,7 +113,10 @@
 		<tr>
 			<td></td>
 			<td></td>
-			<td align="right"><input type="submit" value="Update" /></td>
+			<td></td>
+			<td align="right">
+				<input class="btn btn-default" type="submit" name="update" value="Update" />
+			</td>
 		</tr>
 		</table>
 		</form>

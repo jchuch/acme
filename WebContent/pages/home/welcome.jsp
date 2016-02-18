@@ -80,8 +80,8 @@
 			<td><label><%= tableSec.getName() %></label></td>
 			<td><label><%= tableSec.getLevel() %></label></td>
 			<td>
-				<input type="submit" name="select_<%= tableSec.getId() %>" value="Select" />
-				<input type="submit" name="update_<%= tableSec.getId() %>" value="Update" />
+				<input class="btn btn-default" type="submit" name="select_<%= tableSec.getId() %>" value="Select" />
+				<input class="btn btn-default" type="submit" name="update_<%= tableSec.getId() %>" value="Update" />
 			</td>
 		</tr>
 		<%

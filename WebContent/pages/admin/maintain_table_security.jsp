@@ -71,11 +71,11 @@
 		<form action="${pageContext.request.contextPath}/TableSecurityLevelController" method="post" role="form">
 		<table class="table table-striped">
 		<tr>
-			<th><label>Id</label></th>
-			<th><label>Name</label></th>
-			<th><label>Level</label></th>
+			<th class="col-md-2"><label>Id</label></th>
+			<th class="col-md-6"><label>Name</label></th>
+			<th class="col-md-2"><label>Level</label></th>
+			<th class="col-md-2"></th>
 		</tr>
-
 		<%
 		String[] levelOptions = { "G", "E", "F", "H", "HE", "HF", "FE", "L" };
 
@@ -86,7 +86,7 @@
 			<td><label><%= tableSecObj.getId() %></label></td>
 			<td><label><%= tableSecObj.getName() %></label></td>
 			<td>
-				<select name="level_<%= tableSecObj.getId() %>">
+				<select class="form-control" name="level_<%= tableSecObj.getId() %>">
 					<option value="">-</option>
 					<%
 					String selected = "";
@@ -104,6 +104,7 @@
 
 				</select>
 			</td>
+			<td></td>
 		</tr>
 		<%
 		} // END, for
@@ -112,7 +113,10 @@
 		<tr>
 			<td></td>
 			<td></td>
-			<td align="right"><input type="submit" value="Update" /></td>
+			<td></td>
+			<td align="right">
+				<input class="btn btn-default" type="submit" name="update" value="Update" />
+			</td>
 		</tr>
 		</table>
 		</form>
