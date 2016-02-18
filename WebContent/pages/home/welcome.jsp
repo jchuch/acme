@@ -81,7 +81,7 @@
 			<td><label><%= tableSec.getLevel() %></label></td>
 			<td>
 				<input class="btn btn-default" type="submit" name="select_<%= tableSec.getId() %>" value="Select" />
-				<input class="btn btn-default" type="submit" name="update_<%= tableSec.getId() %>" value="Update" />
+				<input class="btn btn-default" type="submit" name="insert_<%= tableSec.getId() %>" value="Insert" />
 			</td>
 		</tr>
 		<%
