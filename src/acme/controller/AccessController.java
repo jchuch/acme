@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import acme.dao.TableSecurityDAO;
 import acme.dbmodel.TableSecurity;
 import acme.dbmodel.User;
+import acme.model.Message;
 
 public class AccessController extends HttpServlet {
 
@@ -115,32 +116,43 @@ public class AccessController extends HttpServlet {
 
 		int indexUserLevel = securityLevelIndex.indexOf(level);
 		int indexTableLevel = securityLevelIndex.indexOf(tableLevel);
-		char queryResult = securityLevelMatrix[indexUserLevel][indexTableLevel];
 
-		String errMsg = "";
+		Message msg = new Message();
+		try {
+			char queryResult = securityLevelMatrix[indexUserLevel][indexTableLevel];
 
+			// select
+			if(action == 1 && (queryResult == 'l' || queryResult == 'e')){
+				//success operation
 
-		// select
-		if(action == 1 && (queryResult == 'l' || queryResult == 'e')){
-			//success operation
+				msg.setMsgType("success");
+				msg.setMessage("Operation Success!");
+			}
+			// insert
+			else if(action == 2 && (queryResult == 's' || queryResult == 'e')){
+				//success operation
 
-			errMsg = "Operation Success!";
+				msg.setMsgType("success");
+				msg.setMessage("Operation Success!");
+			}
+			else {
+				// failed operation
+
+				//deny,log,inform user
+				msg.setMsgType("warning");
+				msg.setMessage("Operation Failed!");
+
+				LOG.debug("user operation denied!");
+			}
+		} catch(Exception e) {
+			LOG.error("check access errro!", e);
+			msg.setMsgType("danger");
+			msg.setMessage("Operation Error!");
 		}
-		// insert
-		else if(action == 2 && (queryResult == 's' || queryResult == 'e')){
-			//success operation
 
-			errMsg = "Operation Success!";
-		}
-		else {
-			//deny,log,inform user
-			errMsg = "Operation Failed!";
-			LOG.debug("user operation denied!");
-		}
+		request.getSession().setAttribute("message", msg);
 
-		request.getSession().setAttribute("error", errMsg);
-
-		response.sendRedirect(request.getContextPath()+"/home/welcome.jsp");
+		response.sendRedirect(request.getContextPath()+"/pages/home/welcome.jsp");
 	}
 
 

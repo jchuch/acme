@@ -11,17 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import acme.dao.TableSecurityDAO;
 import acme.dao.UserDAO;
-import acme.dbmodel.TableSecurity;
+import acme.dbmodel.User;
+import acme.model.Message;
 
-public class TableLevelController extends HttpServlet {
+public class UserLevelController extends HttpServlet {
 
 	private static final Logger LOG = LoggerFactory.getLogger("acme");
 
 	private static final long serialVersionUID = 1L;
 
-	public TableLevelController() {
+	public UserLevelController() {
 		super();
 	}
 
@@ -34,8 +34,8 @@ public class TableLevelController extends HttpServlet {
 			//LOG.debug("parameter="+parameter);
 		    if(parameter.toLowerCase().startsWith("level_")) {
 
-		    	String tableSecIdStr = parameter.substring("level_".length(), parameter.length());
-		    	LOG.debug("tableSecIdStr="+tableSecIdStr);
+		    	String userIdStr = parameter.substring("level_".length(), parameter.length());
+		    	LOG.debug("userIdStr="+userIdStr);
 
 		        //String[] values = parameters.get(parameter);
 		        //LOG.debug("values="+values);
@@ -43,12 +43,12 @@ public class TableLevelController extends HttpServlet {
 		        String level = request.getParameter(parameter);
 		        LOG.debug("level="+level);
 
-		        TableSecurity tableSec = new TableSecurity();
-		        tableSec.setId(Integer.parseInt(tableSecIdStr));
-		        tableSec.setLevel(level);
+		        User user = new User();
+		        user.setId(Integer.parseInt(userIdStr));
+		        user.setLevel(level);
 
-		        TableSecurityDAO tableSecDao = new TableSecurityDAO();
-		        boolean isUpdateSuccess = tableSecDao.updateLevel(tableSec);
+		        UserDAO userDao = new UserDAO();
+		        boolean isUpdateSuccess = userDao.updateLevel(user);
 		        if (!isUpdateSuccess) {
 		        	errorCount++;
 		        }
@@ -57,16 +57,18 @@ public class TableLevelController extends HttpServlet {
 		} // END, for
 
 
-
-
-		// if error found
+		// if error found, set message
+		Message msg = new Message();
 		if (errorCount>0) {
-			request.getSession().setAttribute("error", "Update failed!");
+			msg.setMsgType("warning");
+			msg.setMessage("Update Failed!");
 		} else {
-			request.getSession().setAttribute("error", "Update success!");
+			msg.setMsgType("success");
+			msg.setMessage("Update Success!");
 		}
+		request.getSession().setAttribute("message", msg);
 
-		response.sendRedirect(request.getContextPath()+"/admin/maintain_table_security.jsp");
+		response.sendRedirect(request.getContextPath()+"/pages/admin/maintain_user.jsp");
 	}
 
 

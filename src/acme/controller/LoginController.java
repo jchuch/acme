@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import acme.dbmodel.User;
 import acme.model.Authenticator;
+import acme.model.Message;
 
 public class LoginController extends HttpServlet {
 
@@ -26,30 +27,56 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		// if user exists in session, redirect to the users homepage
+//		User currentUser = (User)request.getSession().getAttribute("user");
+//		if (currentUser!=null) {
+//			if (currentUser.getAdmin()) {
+//				response.sendRedirect(request.getContextPath()+"/pages/admin/dashboard.jsp");
+//				return;
+//			} else {
+//				response.sendRedirect(request.getContextPath()+"/pages/home/welcome.jsp");
+//				return;
+//			}
+//		}
 
-		Authenticator authenticator = new Authenticator();
-		User user = authenticator.authenticate(username, password);
+		// clear the session first
+		request.getSession().invalidate();
+
+
+		//String loginAction = request.getParameter("loginAction");
+		User user = null;
+		if ("login".equals(request.getParameter("loginAction"))) {
+			String username = request.getParameter("username");
+			String password = request.getParameter("password");
+
+			Authenticator authenticator = new Authenticator();
+			user = authenticator.authenticate(username, password);
+		}
 
 		if (user!=null) {
-			//TODO set session token
 
-			request.getSession().setAttribute("token", username+System.currentTimeMillis());
+			//request.getSession().setAttribute("token", username+System.currentTimeMillis());
 
 			request.getSession().setAttribute("user", user);
 
 			if (user.getAdmin()) {
-				response.sendRedirect(request.getContextPath()+"/admin/dashboard.jsp");
+				response.sendRedirect(request.getContextPath()+"/pages/admin/dashboard.jsp");
+				return;
 			} else {
-				response.sendRedirect(request.getContextPath()+"/home/welcome.jsp");
+				response.sendRedirect(request.getContextPath()+"/pages/home/welcome.jsp");
+				return;
 			}
 
 		} else {
 
-			request.getSession().setAttribute("error", "Login failed!");
+			Message msg = new Message();
+			msg.setMsgType("warning");
+			msg.setMessage("Login failed!");
+
+			request.getSession().setAttribute("message", msg);
 
 			response.sendRedirect(request.getContextPath()+"/");
+			return;
 		}
 
 	}

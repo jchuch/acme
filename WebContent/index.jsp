@@ -1,56 +1,77 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="acme.util.*" %>
+<%@ page import="acme.model.Message,acme.util.*" %>
 <%
-	String errorMsg = "";
-	if (request.getSession().getAttribute("error")!=null) {
-		errorMsg = (String)request.getSession().getAttribute("error");
-		request.getSession().removeAttribute("error");
+	Message message = null;
+	if (request.getSession().getAttribute("message")!=null) {
+		message = (Message)request.getSession().getAttribute("message");
+		request.getSession().removeAttribute("message");
 	}
 
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>ACME Login</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>ACME Login</title>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
 <body>
-	<table >
-	<tr>
-		<td>
-			<div>
-				<label>Welcome</label>
+
+	<div class="container">
+
+		<form class="form-signin" action="${pageContext.request.contextPath}/LoginController" id="loginForm" method="post" role="form">
+			<input type="hidden" id="loginAction" name="loginAction" value="login"/>
+
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<h2 class="form-signin-heading">Welcome To ACME</h2>
+				</div>
 			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div><p><%= errorMsg %>&nbsp;</p></div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div>
-				<form action="${pageContext.request.contextPath}/LoginController" method="post">
-					<table >
-					<tr>
-						<td><label>Enter username :</label></td>
-						<td><input type="text" name="username"></td>
-					</tr>
-					<tr>
-						<td><label>Enter password :</label></td>
-						<td><input type="password" name="password"></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td align="right"><input type="submit" value="Login" /></td>
-					</tr>
-					</table>
-				</form>
+
+
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+
+					<% if(message!=null) { %>
+					<div class="alert alert-<%= message.getMsgType() %>"><%= message.getMessage() %></div>
+					<% } %>
+
+				</div>
 			</div>
-		</td>
-	</tr>
-	</table>
+
+
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" name="username" id="username" class="form-control" required="true"
+							placeholder="Please enter your username"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" name="password" id="password" class="form-control" required="true"
+							placeholder="Please enter your password"/>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<button type="submit" class="btn btn-info">
+						<span class="glyphicon glyphicon-log-in"></span> Login
+					</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
 </body>
 </html>

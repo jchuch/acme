@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import acme.dbmodel.User;
+import acme.model.Message;
 
 public class AuthFilter implements Filter {
 
@@ -42,7 +43,7 @@ public class AuthFilter implements Filter {
 
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse resp = (HttpServletResponse) response;
-		if (req.getSession()!=null && req.getSession().getAttribute("token")!=null &&
+		if (req.getSession()!=null &&
 				req.getSession().getAttribute("user")!=null) {
 
 			String reqUrl = req.getRequestURL()!=null ? req.getRequestURL().toString() : null;
@@ -57,14 +58,15 @@ public class AuthFilter implements Filter {
 
 			if (reqUrl!=null) {
 
-				if (reqUrl.indexOf(ctxPath+"/admin/")>=0) {
+				LOG.debug("reqUrl="+reqUrl);
+
+				if (reqUrl.indexOf(ctxPath+"/pages/admin/")>=0) {
+
 					User user = (User)req.getSession().getAttribute("user");
 					if (user!=null && user.getAdmin()) {
 						isValidPath = true;
 					}
-				}
-
-				if (reqUrl.indexOf(ctxPath+"/home/")>=0) {
+				} else if (reqUrl.indexOf(ctxPath+"/pages/home/")>=0) {
 					User user = (User)req.getSession().getAttribute("user");
 					if (user!=null && !user.getAdmin()) {
 						isValidPath = true;
@@ -79,11 +81,20 @@ public class AuthFilter implements Filter {
 				chain.doFilter(request,response);
 			} else {
 				// invalid path, redirect to error page
+				Message msg = new Message();
+				msg.setMsgType("warning");
+				msg.setMessage("Access Denied!");
+
+				req.getSession().setAttribute("message", msg);
+
 				resp.sendRedirect(req.getContextPath()+"/error.jsp");
+				return;
 			}
 
 		} else {
-			resp.sendRedirect(req.getContextPath()+"/");
+			// redirect to logout
+			resp.sendRedirect(req.getContextPath()+"/logout.jsp");
+			return;
 		}
 
 	}

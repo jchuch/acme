@@ -33,25 +33,25 @@
 
 	<servlet>
 		<description></description>
-		<display-name>LevelController</display-name>
-		<servlet-name>LevelController</servlet-name>
-		<servlet-class>acme.controller.LevelController</servlet-class>
+		<display-name>UserLevelController</display-name>
+		<servlet-name>UserLevelController</servlet-name>
+		<servlet-class>acme.controller.UserLevelController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>LevelController</servlet-name>
-		<url-pattern>/LevelController</url-pattern>
+		<servlet-name>UserLevelController</servlet-name>
+		<url-pattern>/UserLevelController</url-pattern>
 	</servlet-mapping>
 
 
 	<servlet>
 		<description></description>
-		<display-name>TableLevelController</display-name>
-		<servlet-name>TableLevelController</servlet-name>
-		<servlet-class>acme.controller.TableLevelController</servlet-class>
+		<display-name>TableSecurityLevelController</display-name>
+		<servlet-name>TableSecurityLevelController</servlet-name>
+		<servlet-class>acme.controller.TableSecurityLevelController</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>TableLevelController</servlet-name>
-		<url-pattern>/TableLevelController</url-pattern>
+		<servlet-name>TableSecurityLevelController</servlet-name>
+		<url-pattern>/TableSecurityLevelController</url-pattern>
 	</servlet-mapping>
 
 
@@ -66,8 +66,8 @@
 
 	<filter-mapping>
 		<filter-name>AuthFilter</filter-name>
-		<url-pattern>/admin/*</url-pattern>
-		<url-pattern>/home/*</url-pattern>
+		<url-pattern>/pages/admin/*</url-pattern>
+		<url-pattern>/pages/home/*</url-pattern>
 	</filter-mapping>
 
 </web-app>
