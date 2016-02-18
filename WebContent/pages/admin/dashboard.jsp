@@ -13,6 +13,10 @@
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
+	} else {
+		// redirect to index/login page
+		response.sendRedirect(request.getContextPath()+"/logout.jsp");
+		return;
 	}
 
 %>
