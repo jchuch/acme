@@ -68,16 +68,15 @@
 		</div>
 
 
-		<form action="${pageContext.request.contextPath}/UserLevelController" method="post" role="form">
 		<table class="table table-striped">
-		
+
 		<tr>
 			<th class="col-md-1"><label>Id</label></th>
-			<th class="col-md-1"><label>User_Id</label></th>
-			<th class="col-md-1"><label>User_name</label></th>
+			<th class="col-md-1"><label>UserId</label></th>
+			<th class="col-md-1"><label>Username</label></th>
 			<th class="col-md-1"><label>Operation</label></th>
-			<th class="col-md-1"><label>Table_Id</label></th>
-			<th class="col-md-1"><label>Table_name</label></th>
+			<th class="col-md-1"><label>TableId</label></th>
+			<th class="col-md-1"><label>Table Name</label></th>
 			<th class="col-md-2"><label>Time</label></th>
 			<th class="col-md-2"><label>Message</label></th>
 			<th class="col-md-2"></th>
@@ -85,7 +84,7 @@
 		<%
 
 		for(Log logObj : ls) {
-			
+
 		%>
 		<tr>
 			<td><label><%= logObj.getId() %></label></td>
@@ -103,7 +102,6 @@
 		%>
 
 		</table>
-		</form>
 
 	</div>
 

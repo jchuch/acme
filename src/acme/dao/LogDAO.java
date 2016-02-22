@@ -16,24 +16,22 @@ import acme.util.DBConnector;
 public class LogDAO {
 	private static final Logger LOG = LoggerFactory.getLogger("acme");
 
-	// db action, insert, select
-
 	public LogDAO() {
 
 	}
-	
-	//join with user and table_security
+
+	//join with user and table_security, default order by log.id desc
 	public List<Log> getList() {
 		List<Log> ls = new ArrayList<Log>();
 		try(Connection conn = DBConnector.getConnection()) {
-			String sql = "select log.id, log.userid, user.username, log.operation, log.tableid, table_security.name, log.time, log.message from log, user, table_security where log.userid = user.id and log.tableid = table_security.id";
-			
+			String sql = "SELECT log.id, log.userid, user.username, log.operation, log.tableid, table_security.name, log.time, log.message FROM log, user, table_security WHERE log.userid = user.id and log.tableid = table_security.id ORDER BY log.id DESC";
+
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
-				
+
 				ResultSet rs = ps.executeQuery();
 				while(rs.next()) {
 					Log log = new Log();
-					
+
 					log.setId(rs.getInt("id"));
 					log.setUserId(rs.getInt("userid"));
 					log.setUserName(rs.getString("user.username"));
@@ -42,11 +40,9 @@ public class LogDAO {
 					log.setTableName(rs.getString("table_security.name"));
 					log.setTime(rs.getString("time"));
 					log.setMessage(rs.getString("message"));
-				
+
 					ls.add(log);
-					
-					
-					
+
 				}
 				//LOG.debug("#!$!@#$!@#$!@#$!@#$!@#$!@#$!@#$ls.size"+ ls.size());
 				rs.close();
@@ -71,7 +67,7 @@ public class LogDAO {
 				String operation =log.getOperation();
 				int tableid = log.getTableId();
 				String message = log.getMessage();
-				
+
 				ps.setInt(1, userid);
 				ps.setString(2, operation.trim());
 				ps.setInt(3, tableid);
