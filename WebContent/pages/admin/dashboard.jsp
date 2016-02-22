@@ -73,7 +73,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="#">View Logs</a>
+				<a href="view_log.jsp">View Logs</a>
 			</div>
 		</div>
 

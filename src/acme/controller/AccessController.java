@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import acme.dao.LogDAO;
 import acme.dao.TableSecurityDAO;
+import acme.dao.UserDAO;
+import acme.dbmodel.Log;
 import acme.dbmodel.TableSecurity;
 import acme.dbmodel.User;
 import acme.model.Message;
@@ -151,6 +154,29 @@ public class AccessController extends HttpServlet {
 				msg.setMessage("Operation Failed!");
 
 				LOG.debug("user operation denied!");
+				
+				// action : 1 = select
+				// action : 2 = insert
+				String operation = null;
+				if(action==1)
+					operation = "select";
+				else if(action==2)
+					operation ="insert";
+				
+		        Log log = new Log();
+		        log.setUserId(currentUser.getId());
+		        log.setOperation(operation);
+		        log.setTableId(Integer.parseInt(tableSecId));
+		        log.setMessage("operation failed");
+		        
+
+		        LogDAO logDao = new LogDAO();
+		        boolean isUpdateSuccess = logDao.wrLog(log);
+
+
+				
+				
+				
 			}
 		} catch(Exception e) {
 			LOG.error("check access errro!", e);
