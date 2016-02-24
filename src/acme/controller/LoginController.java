@@ -50,7 +50,7 @@ public class LoginController extends HttpServlet {
 			String password = request.getParameter("password");
 
 			Authenticator authenticator = new Authenticator();
-			user = authenticator.authenticate(username, password);
+			user = authenticator.authenticate2(username, password);
 		}
 
 		if (user!=null) {

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import acme.dbmodel.User;
 import acme.util.DBConnector;
+import defuse.PasswordStorage;
 
 public class UserDAO {
 
@@ -107,6 +108,82 @@ public class UserDAO {
 			//throw e;
 		}
 		return isUpdateSuccess;
+	}
+
+
+	public boolean updatePassword(User user, String oldPassword, String newPassword, String newPassword2) {
+		boolean isPasswordUpdated = false;
+		if (user!=null && oldPassword!=null && newPassword!=null && newPassword.equals(newPassword2)) {
+
+			try(Connection conn = DBConnector.getConnection()) {
+
+				String hashOldPassword = null;
+				String sql = "select id, password from user where id = ?";
+				try (PreparedStatement ps = conn.prepareStatement(sql)) {
+					ps.setInt(1, user.getId());
+
+					ResultSet rs = ps.executeQuery();
+					if (rs.next()) {
+						hashOldPassword = rs.getString("password");
+					}
+					rs.close();
+				} catch(Exception e1) {
+					throw e1;
+				}
+
+				LOG.debug("user.getId()="+user.getId()+" , hashOldPassword="+hashOldPassword);
+
+				boolean isOldPasswordMatch = PasswordStorage.verifyPassword(oldPassword, hashOldPassword);
+				LOG.debug("isOldPasswordMatch="+isOldPasswordMatch);
+
+				if (isOldPasswordMatch) {
+
+					String sql2 = "update user set password = ? where id = ?";
+					try (PreparedStatement ps = conn.prepareStatement(sql2)) {
+						ps.setString(1, PasswordStorage.createHash(newPassword));
+						ps.setInt(2, user.getId());
+
+						isPasswordUpdated = ps.executeUpdate()>0;
+
+					} catch(Exception e1) {
+						throw e1;
+					}
+				}
+			} catch(Exception e) {
+				LOG.error("updatePassword error!", e);
+				//throw e;
+			}
+
+		}
+		return isPasswordUpdated;
+	}
+
+
+	// can only reset non-admin password
+	public boolean resetPassword(User user, String newPassword, String newPassword2) {
+		boolean isPasswordUpdated = false;
+		if (user!=null && newPassword!=null && newPassword.equals(newPassword2)) {
+
+			try(Connection conn = DBConnector.getConnection()) {
+
+				String sql2 = "update user set password = ? where id = ? and admin = 'N' ";
+				try (PreparedStatement ps = conn.prepareStatement(sql2)) {
+					ps.setString(1, PasswordStorage.createHash(newPassword));
+					ps.setInt(2, user.getId());
+
+					isPasswordUpdated = ps.executeUpdate()>0;
+
+				} catch(Exception e1) {
+					throw e1;
+				}
+
+			} catch(Exception e) {
+				LOG.error("resetPassword error!", e);
+				//throw e;
+			}
+
+		}
+		return isPasswordUpdated;
 	}
 
 
