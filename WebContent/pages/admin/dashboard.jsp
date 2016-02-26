@@ -58,22 +58,27 @@
 			</div>
 		</div>
 
-
 		<div class="row">
 			<div class="col-md-12">
-				<a href="maintain_user.jsp">Maintain Users</a>
+				<a href="create_new_users.jsp">Create new users</a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="maintain_table_security.jsp">Maintain Table Security</a>
+				<a href="maintain_user.jsp">Maintain security level of users</a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="view_log.jsp">View Logs</a>
+				<a href="maintain_table_security.jsp">Maintain security level of tables</a>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-12">
+				<a href="view_log.jsp">View logs</a>
 			</div>
 		</div>
 
