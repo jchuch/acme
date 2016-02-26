@@ -50,6 +50,11 @@
 			</div>
 		</div>
 
+		<ol class="breadcrumb">
+			<li><a href="${pageContext.request.contextPath}/pages/home/normal_user_dashboard.jsp">Home</a></li>
+			<li class="active">Access tables</li>
+		</ol>
+
 
 		<div class="row">
 			<div class="col-md-4 col-md-offset-4">

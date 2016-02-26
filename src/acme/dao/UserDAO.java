@@ -88,11 +88,15 @@ public class UserDAO {
 	public void createNewUser(String username, String password) {
 		//User user = null;
 		try(Connection conn = DBConnector.getConnection()) {
-			String sql = "insert into user (username, password) values ('?','?')";
+			String sql = "insert into user (username, password) values (?,?)";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				ps.setString(1, username);
-				ps.setString(2, password);
+				
+				String hashPassword = PasswordStorage.createHash(password);
+				ps.setString(2, hashPassword);
 
+				boolean isSuccess = ps.executeUpdate()>0;
+				
 			/*	ResultSet rs = ps.executeQuery();
 				if (rs.next()) {
 					user = new User();
@@ -103,11 +107,11 @@ public class UserDAO {
 				}
 				rs.close();*/
 
-			} catch(SQLException sqle) {
-				throw sqle;
+			} catch(Exception e) {
+				throw e;
 			}
 
-		} catch(SQLException e) {
+		} catch(Exception e) {
 			LOG.error("Create new user error!", e);
 			//user = null;
 		}

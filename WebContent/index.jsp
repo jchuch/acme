@@ -48,7 +48,7 @@
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
 					<div class="form-group">
-						<label for="username">Username</label>
+						<label for="username">User name</label>
 						<input type="text" name="username" id="username" class="form-control" required="true"
 							placeholder="Please enter your username"/>
 					</div>

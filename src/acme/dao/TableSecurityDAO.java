@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import acme.dbmodel.TableSecurity;
 import acme.util.DBConnector;
+import defuse.PasswordStorage;
 
 public class TableSecurityDAO {
 
@@ -78,6 +79,39 @@ public class TableSecurityDAO {
 		}
 		return ls;
 	}
+	
+	
+	public void createNewTable(String tablename, String securitylevel) {
+		
+		try(Connection conn = DBConnector.getConnection()) {
+			String sql = "insert into table_security (name, level) values (?,?)";
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+				ps.setString(1, tablename);		
+				ps.setString(2, securitylevel);
+
+				boolean isSuccess = ps.executeUpdate()>0;
+				
+			/*	ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					user = new User();
+					user.setId(rs.getInt("id"));
+					user.setUsername(rs.getString("username"));
+					user.setLevel(rs.getString("level"));
+					user.setAdmin("Y".equals(rs.getString("admin")));
+				}
+				rs.close();*/
+
+			} catch(Exception e) {
+				throw e;
+			}
+
+		} catch(Exception e) {
+			LOG.error("Create new tables error!", e);
+			//user = null;
+		}
+	
+	}
+	
 
 
 	public boolean updateLevel(TableSecurity tableSec) {//throws SQLException

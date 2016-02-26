@@ -53,7 +53,7 @@
 
 		<ol class="breadcrumb">
 			<li><a href="${pageContext.request.contextPath}/pages/admin/dashboard.jsp">Home</a></li>
-			<li class="active">View Log</li>
+			<li class="active">View Logs</li>
 		</ol>
 
 

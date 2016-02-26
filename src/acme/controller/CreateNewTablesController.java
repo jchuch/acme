@@ -10,41 +10,51 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import acme.dao.TableSecurityDAO;
 import acme.dao.UserDAO;
 import acme.dbmodel.User;
 import acme.model.Authenticator;
 import acme.model.Message;
 
-public class CreateNewUsersController extends HttpServlet{
+public class CreateNewTablesController extends HttpServlet{
 	
 	private static final Logger LOG = LoggerFactory.getLogger("acme");
 
 	private static final long serialVersionUID = 1L;
 
-	public CreateNewUsersController() {
+	public CreateNewTablesController() {
 		super();
 }
 
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		// clear the session first
-		// request.getSession().invalidate();
+		User currentUser = (User)request.getSession().getAttribute("user");
+		if (currentUser==null) {
+			// if user not found in session, redirect to login
+			response.sendRedirect(request.getContextPath()+"/");
+			return;
+		}
+		
+		if ("createNewTables".equals(request.getParameter("createNewTablesAction"))) {
+			String tablename = request.getParameter("tablename");
 
-		if ("createNewUsers".equals(request.getParameter("createNewUsersAction"))) {
-			String username = request.getParameter("username");
-			String password = request.getParameter("password");
 
-			UserDAO user  = new UserDAO();
-			user.createNewUser(username,password);
+
+			String securitylevel = currentUser.getLevel();
+			
+			
+
+			TableSecurityDAO table  = new TableSecurityDAO();
+			table.createNewTable(tablename,securitylevel);
 			
 			Message msg = new Message();
 
-			msg.setMessage("User "+username+ " created!");
+			msg.setMessage("Table "+tablename+ " created!");
 
 			request.getSession().setAttribute("message", msg);
 			
-			response.sendRedirect(request.getContextPath()+"/pages/admin/create_new_users.jsp");
+			response.sendRedirect(request.getContextPath()+"/pages/home/create_new_tables.jsp");
 			
 		}
 		

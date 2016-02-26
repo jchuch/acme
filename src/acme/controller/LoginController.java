@@ -63,7 +63,7 @@ public class LoginController extends HttpServlet {
 				response.sendRedirect(request.getContextPath()+"/pages/admin/dashboard.jsp");
 				return;
 			} else {
-				response.sendRedirect(request.getContextPath()+"/pages/home/welcome.jsp");
+				response.sendRedirect(request.getContextPath()+"/pages/home/normal_user_dashboard.jsp");
 				return;
 			}
 
