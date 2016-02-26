@@ -6,10 +6,10 @@
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
 	} else {
-	// redirect to index/login page
+		// redirect to index/login page
 		response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		return;
-}
+	}
 
 	Message message = null;
 	if (request.getSession().getAttribute("message")!=null) {
@@ -32,7 +32,7 @@
 <body>
 
 	<div class="container">
-		
+
 		<form class="form-signin" action="${pageContext.request.contextPath}/CreateNewTablesController" id="createNewTablesForm" method="post" role="form">
 			<input type="hidden" id="createNewTablesAction" name="createNewTablesAction" value="createNewTables"/>
 
@@ -75,7 +75,11 @@
 				</div>
 			</div>
 
-				<input class="btn btn-default" type="submit" name="create" value="create" />	
+			<div class="row">
+				<div class="col-md-4 col-md-offset-4">
+					<input class="btn btn-default" type="submit" name="create" value="Create" />
+				</div>
+			</div>
 		</form>
 	</div>
 

@@ -11,12 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import acme.dao.UserDAO;
-import acme.dbmodel.User;
-import acme.model.Authenticator;
 import acme.model.Message;
 
 public class CreateNewUsersController extends HttpServlet{
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger("acme");
 
 	private static final long serialVersionUID = 1L;
@@ -28,29 +26,28 @@ public class CreateNewUsersController extends HttpServlet{
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
-		// clear the session first
-		// request.getSession().invalidate();
-
 		if ("createNewUsers".equals(request.getParameter("createNewUsersAction"))) {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
+			String level = request.getParameter("level");
 
-			UserDAO user  = new UserDAO();
-			user.createNewUser(username,password);
-			
+			UserDAO user = new UserDAO();
+			boolean isCreated = user.createNewUser(username,password,level);
+
 			Message msg = new Message();
-
-			msg.setMessage("User "+username+ " created!");
+			if (isCreated) {
+				msg.setMsgType("success");
+				msg.setMessage("User "+username+" created!");
+			} else {
+				msg.setMsgType("warning");
+				msg.setMessage("User "+username+" cannot be created!");
+			}
 
 			request.getSession().setAttribute("message", msg);
-			
+
 			response.sendRedirect(request.getContextPath()+"/pages/admin/create_new_users.jsp");
-			
+
 		}
-		
-		
-
-
 
 	}
 

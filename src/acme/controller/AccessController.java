@@ -131,68 +131,71 @@ public class AccessController extends HttpServlet {
 		System.out.println("table level:" + tableLevel);*/
 
 
-		//int indexUserLevel = securityLevelIndex.indexOf(userLevel);
-		int indexUserLevel = securityLevelIdx.get(userLevel);
-
-		//int indexTableLevel = securityLevelIndex.indexOf(tableLevel);
-		int indexTableLevel = securityLevelIdx.get(tableLevel);
-
-
-		/*System.out.println("index of user level:" + indexUserLevel);
-		System.out.println("index of table level:" + indexTableLevel);*/
-
-
 		Message msg = new Message();
+
+		int indexUserLevel = -1;
+		int indexTableLevel = -1;
+
+		boolean isSecLvFound = false;
 		try {
-			char queryResult = securityLevelMatrix[indexUserLevel][indexTableLevel];
-
-			// select
-			if(action == 1 && (queryResult == 'l' || queryResult == 'e')){
-				//success operation
-
-				msg.setMsgType("success");
-				msg.setMessage("Operation Success!");
-			}
-			// insert
-			else if(action == 2 && (queryResult == 's' || queryResult == 'e')){
-				//success operation
-
-				msg.setMsgType("success");
-				msg.setMessage("Operation Success!");
-			}
-			else {
-				// failed operation
-
-				//deny,log,inform user
-				msg.setMsgType("warning");
-				msg.setMessage("Operation Failed!");
-
-				LOG.debug("user operation denied!");
-
-				// action : 1 = select
-				// action : 2 = insert
-				String operation = null;
-				if(action==1)
-					operation = "select";
-				else if(action==2)
-					operation ="insert";
-
-		        Log log = new Log();
-		        log.setUserId(currentUser.getId());
-		        log.setOperation(operation);
-		        log.setTableId(Integer.parseInt(tableSecId));
-		        log.setMessage("operation failed");
-
-
-		        LogDAO logDao = new LogDAO();
-		        boolean isUpdateSuccess = logDao.wrLog(log);
-
-
-			}
+			indexUserLevel = securityLevelIdx.get(userLevel);
+			indexTableLevel = securityLevelIdx.get(tableLevel);
+			isSecLvFound = true;
 		} catch(Exception e) {
-			LOG.error("check access errro!", e);
 			msg.setMsgType("danger");
-			msg.setMessage("Operation Error!");
+			msg.setMessage("Security level Error!");
+		}
+
+		if (isSecLvFound) {
+			try {
+				char queryResult = securityLevelMatrix[indexUserLevel][indexTableLevel];
+
+				// select
+				if(action == 1 && (queryResult == 'l' || queryResult == 'e')){
+					//success operation
+
+					msg.setMsgType("success");
+					msg.setMessage("Operation Success!");
+				}
+				// insert
+				else if(action == 2 && (queryResult == 's' || queryResult == 'e')){
+					//success operation
+
+					msg.setMsgType("success");
+					msg.setMessage("Operation Success!");
+				}
+				else {
+					// failed operation
+
+					//deny,log,inform user
+					msg.setMsgType("warning");
+					msg.setMessage("Operation Failed!");
+
+					LOG.debug("user operation denied!");
+
+					// action : 1 = select
+					// action : 2 = insert
+					String operation = null;
+					if(action==1)
+						operation = "select";
+					else if(action==2)
+						operation ="insert";
+
+			        Log log = new Log();
+			        log.setUserId(currentUser.getId());
+			        log.setOperation(operation);
+			        log.setTableId(Integer.parseInt(tableSecId));
+			        log.setMessage("operation failed");
+
+			        LogDAO logDao = new LogDAO();
+			        boolean isUpdateSuccess = logDao.wrLog(log);
+
+				}
+			} catch(Exception e) {
+				LOG.error("check access errro!", e);
+				msg.setMsgType("danger");
+				msg.setMessage("Operation Error!");
+			}
 		}
 
 		request.getSession().setAttribute("message", msg);

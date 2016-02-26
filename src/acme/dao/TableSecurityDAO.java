@@ -79,27 +79,17 @@ public class TableSecurityDAO {
 		}
 		return ls;
 	}
-	
-	
-	public void createNewTable(String tablename, String securitylevel) {
-		
+
+
+	public boolean createNewTable(String tablename, String securitylevel) {
+		boolean isSuccess = false;
 		try(Connection conn = DBConnector.getConnection()) {
 			String sql = "insert into table_security (name, level) values (?,?)";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
-				ps.setString(1, tablename);		
+				ps.setString(1, tablename);
 				ps.setString(2, securitylevel);
 
-				boolean isSuccess = ps.executeUpdate()>0;
-				
-			/*	ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					user = new User();
-					user.setId(rs.getInt("id"));
-					user.setUsername(rs.getString("username"));
-					user.setLevel(rs.getString("level"));
-					user.setAdmin("Y".equals(rs.getString("admin")));
-				}
-				rs.close();*/
+				isSuccess = ps.executeUpdate()>0;
 
 			} catch(Exception e) {
 				throw e;
@@ -107,11 +97,9 @@ public class TableSecurityDAO {
 
 		} catch(Exception e) {
 			LOG.error("Create new tables error!", e);
-			//user = null;
 		}
-	
+		return isSuccess;
 	}
-	
 
 
 	public boolean updateLevel(TableSecurity tableSec) {//throws SQLException

@@ -87,7 +87,9 @@
 			<td><label><%= userObj.getUsername() %></label></td>
 			<td>
 				<select class="form-control" name="level_<%= userObj.getId() %>">
+					<%--
 					<option value="">-</option>
+					--%>
 					<%
 					String selected = "";
 					for (int i=0; i<levelOptions.length; i++) {

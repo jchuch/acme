@@ -87,7 +87,9 @@
 			<td><label><%= tableSecObj.getName() %></label></td>
 			<td>
 				<select class="form-control" name="level_<%= tableSecObj.getId() %>">
+					<%--
 					<option value="">-</option>
+					--%>
 					<%
 					String selected = "";
 					for (int i=0; i<levelOptions.length; i++) {
@@ -123,85 +125,5 @@
 
 	</div>
 
-
-<%--
-	<table >
-	<tr>
-		<td>
-			<div>
-				<table >
-				<tr>
-					<td>
-						<label>Welcome : <%= user.getUsername() %></label>
-					</td>
-					<td>
-						<button><a href="${pageContext.request.contextPath}/logout.jsp">Logout</a></button>
-					</td>
-				</tr>
-				</table>
-			</div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div><p><%= errorMsg %>&nbsp;</p></div>
-		</td>
-	</tr>
-	<tr>
-		<td>
-			<div>
-				<form action="${pageContext.request.contextPath}/TableSecurityLevelController" method="post">
-					<table >
-					<tr>
-						<th><label>Id</label></th>
-						<th><label>Name</label></th>
-						<th><label>Level</label></th>
-					</tr>
-
-					<%
-					String[] levelOptions = { "G", "E", "F", "H", "HE", "HF", "FE", "L" };
-
-					for(TableSecurity tableSecObj : ls) {
-						String level = tableSecObj.getLevel();
-					%>
-					<tr>
-						<td><label><%= tableSecObj.getId() %></label></td>
-						<td><label><%= tableSecObj.getName() %></label></td>
-						<td>
-							<select name="level_<%= tableSecObj.getId() %>">
-								<option value="">-</option>
-								<%
-								String selected = "";
-								for (int i=0; i<levelOptions.length; i++) {
-									if (levelOptions[i].equals(level)) {
-										selected = "selected";
-									} else {
-										selected = "";
-									}
-									%>
-									<option value="<%= levelOptions[i] %>" <%= selected %>><%= levelOptions[i] %></option>
-									<%
-								}
-								%>
-
-							</select>
-						</td>
-					</tr>
-					<%
-					} // END, for
-					%>
-
-					<tr>
-						<td></td>
-						<td></td>
-						<td align="right"><input type="submit" value="Update" /></td>
-					</tr>
-					</table>
-				</form>
-			</div>
-		</td>
-	</tr>
-	</table>
---%>
 </body>
 </html>

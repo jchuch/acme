@@ -85,27 +85,19 @@ public class UserDAO {
 	/*
 	 * encryption of password?
 	 */
-	public void createNewUser(String username, String password) {
-		//User user = null;
+	public boolean createNewUser(String username, String password, String level) {
+		boolean isSuccess = false;
 		try(Connection conn = DBConnector.getConnection()) {
-			String sql = "insert into user (username, password) values (?,?)";
+			String sql = "insert into user (username, password, level, admin) values (?,?,?,'N')";
 			try (PreparedStatement ps = conn.prepareStatement(sql)) {
 				ps.setString(1, username);
-				
+
 				String hashPassword = PasswordStorage.createHash(password);
 				ps.setString(2, hashPassword);
 
-				boolean isSuccess = ps.executeUpdate()>0;
-				
-			/*	ResultSet rs = ps.executeQuery();
-				if (rs.next()) {
-					user = new User();
-					user.setId(rs.getInt("id"));
-					user.setUsername(rs.getString("username"));
-					user.setLevel(rs.getString("level"));
-					user.setAdmin("Y".equals(rs.getString("admin")));
-				}
-				rs.close();*/
+				ps.setString(3, level);
+
+				isSuccess = ps.executeUpdate()>0;
 
 			} catch(Exception e) {
 				throw e;
@@ -115,10 +107,10 @@ public class UserDAO {
 			LOG.error("Create new user error!", e);
 			//user = null;
 		}
-	
+		return isSuccess;
 	}
-	
-	
+
+
 
 	public boolean updateLevel(User user) {//throws SQLException
 		boolean isUpdateSuccess = false;
@@ -147,8 +139,8 @@ public class UserDAO {
 		return isUpdateSuccess;
 	}
 
-	
-	
+
+
 
 	public boolean updatePassword(User user, String oldPassword, String newPassword, String newPassword2) {
 		boolean isPasswordUpdated = false;
