@@ -82,6 +82,39 @@ public class UserDAO {
 		return ls;
 	}
 
+	/*
+	 * encryption of password?
+	 */
+	public void createNewUser(String username, String password) {
+		//User user = null;
+		try(Connection conn = DBConnector.getConnection()) {
+			String sql = "insert into user (username, password) values ('?','?')";
+			try (PreparedStatement ps = conn.prepareStatement(sql)) {
+				ps.setString(1, username);
+				ps.setString(2, password);
+
+			/*	ResultSet rs = ps.executeQuery();
+				if (rs.next()) {
+					user = new User();
+					user.setId(rs.getInt("id"));
+					user.setUsername(rs.getString("username"));
+					user.setLevel(rs.getString("level"));
+					user.setAdmin("Y".equals(rs.getString("admin")));
+				}
+				rs.close();*/
+
+			} catch(SQLException sqle) {
+				throw sqle;
+			}
+
+		} catch(SQLException e) {
+			LOG.error("Create new user error!", e);
+			//user = null;
+		}
+	
+	}
+	
+	
 
 	public boolean updateLevel(User user) {//throws SQLException
 		boolean isUpdateSuccess = false;
@@ -110,6 +143,8 @@ public class UserDAO {
 		return isUpdateSuccess;
 	}
 
+	
+	
 
 	public boolean updatePassword(User user, String oldPassword, String newPassword, String newPassword2) {
 		boolean isPasswordUpdated = false;
