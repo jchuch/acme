@@ -35,7 +35,7 @@
 
 	<div class="container">
 
-		<form class="form-signin" action="${pageContext.request.contextPath}/CreateNewTablesController" id="createNewTablesForm" method="post" role="form">
+		<form class="form-signin" action="${pageContext.request.contextPath}/pages/home/CreateNewTablesController" id="createNewTablesForm" method="post" role="form">
 			<input type="hidden" id="createNewTablesAction" name="createNewTablesAction" value="createNewTables"/>
 
 		<div class="page-header">

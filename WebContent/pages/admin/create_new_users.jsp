@@ -35,7 +35,7 @@
 
 	<div class="container">
 
-		<form class="form-signin" action="${pageContext.request.contextPath}/CreateNewUsersController" id="createNewusersForm" method="post" role="form">
+		<form class="form-signin" action="${pageContext.request.contextPath}/pages/admin/CreateNewUsersController" id="createNewusersForm" method="post" role="form">
 			<input type="hidden" id="createNewUsersAction" name="createNewUsersAction" value="createNewUsers"/>
 
 		<div class="page-header">

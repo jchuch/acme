@@ -27,7 +27,19 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>AccessController</servlet-name>
-		<url-pattern>/AccessController</url-pattern>
+		<url-pattern>/pages/home/AccessController</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<description></description>
+		<display-name>CreateNewTablesController</display-name>
+		<servlet-name>CreateNewTablesController</servlet-name>
+		<servlet-class>acme.controller.CreateNewTablesController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateNewTablesController</servlet-name>
+		<url-pattern>/pages/home/CreateNewTablesController</url-pattern>
 	</servlet-mapping>
 
 
@@ -39,7 +51,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>UserLevelController</servlet-name>
-		<url-pattern>/UserLevelController</url-pattern>
+		<url-pattern>/pages/admin/UserLevelController</url-pattern>
 	</servlet-mapping>
 
 
@@ -51,7 +63,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>TableSecurityLevelController</servlet-name>
-		<url-pattern>/TableSecurityLevelController</url-pattern>
+		<url-pattern>/pages/admin/TableSecurityLevelController</url-pattern>
 	</servlet-mapping>
 
 
@@ -63,18 +75,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>CreateNewUsersController</servlet-name>
-		<url-pattern>/CreateNewUsersController</url-pattern>
-	</servlet-mapping>
-
-	<servlet>
-		<description></description>
-		<display-name>CreateNewTablesController</display-name>
-		<servlet-name>CreateNewTablesController</servlet-name>
-		<servlet-class>acme.controller.CreateNewTablesController</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>CreateNewTablesController</servlet-name>
-		<url-pattern>/CreateNewTablesController</url-pattern>
+		<url-pattern>/pages/admin/CreateNewUsersController</url-pattern>
 	</servlet-mapping>
 
 

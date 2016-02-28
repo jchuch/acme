@@ -67,7 +67,7 @@
 		</div>
 
 
-		<form action="${pageContext.request.contextPath}/AccessController" method="post" role="form">
+		<form action="${pageContext.request.contextPath}/pages/home/AccessController" method="post" role="form">
 		<table class="table table-striped">
 		<tr>
 			<th><label>Id</label></th>
