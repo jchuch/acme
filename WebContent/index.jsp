@@ -24,26 +24,29 @@
 
 	<div class="container">
 
+		<div class="row" style="margin-top:100px;">
+			<div class="col-md-4 col-md-offset-4">
+				<h2 class="form-signin-heading">Welcome To ACME</h2>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4 col-md-offset-4">
+
+				<% if(message!=null) { %>
+				<div class="alert alert-<%= message.getMsgType() %>"><%= message.getMessage() %></div>
+				<% } %>
+
+			</div>
+		</div>
+
+
+		<div class="row" style="height:100px;">
+		</div>
+
+
 		<form class="form-signin" action="${pageContext.request.contextPath}/LoginController" id="loginForm" method="post" role="form">
 			<input type="hidden" id="loginAction" name="loginAction" value="login"/>
-
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-					<h2 class="form-signin-heading">Welcome To ACME</h2>
-				</div>
-			</div>
-
-
-			<div class="row">
-				<div class="col-md-4 col-md-offset-4">
-
-					<% if(message!=null) { %>
-					<div class="alert alert-<%= message.getMsgType() %>"><%= message.getMessage() %></div>
-					<% } %>
-
-				</div>
-			</div>
-
 
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
