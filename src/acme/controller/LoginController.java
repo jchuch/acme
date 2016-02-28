@@ -54,9 +54,6 @@ public class LoginController extends HttpServlet {
 		}
 
 		if (user!=null) {
-
-			//request.getSession().setAttribute("token", username+System.currentTimeMillis());
-
 			request.getSession().setAttribute("user", user);
 
 			if (user.getAdmin()) {

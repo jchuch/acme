@@ -2,20 +2,21 @@
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*,acme.dao.UserDAO,acme.dbmodel.User,acme.model.Message,acme.util.*" %>
 <%
-
-	Message message = null;
-	if (request.getSession().getAttribute("message")!=null) {
-		message = (Message)request.getSession().getAttribute("message");
-		request.getSession().removeAttribute("message");
-	}
+	//Only normal user can access
 
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
 	} else {
-		// redirect to index/login page
+		// redirect to logout page
 		response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		return;
+	}
+
+	Message message = null;
+	if (request.getSession().getAttribute("message")!=null) {
+		message = (Message)request.getSession().getAttribute("message");
+		request.getSession().removeAttribute("message");
 	}
 
 %>
@@ -59,13 +60,13 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="welcome.jsp">Access tables</a>
+				<a href="access_tables.jsp">Access Tables</a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="create_new_tables.jsp">Create new tables</a>
+				<a href="create_new_tables.jsp">Create New Table</a>
 			</div>
 		</div>
 

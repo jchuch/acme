@@ -4,12 +4,6 @@
 <%
 	// Only admin / SO can access
 
-	Message message = null;
-	if (request.getSession().getAttribute("message")!=null) {
-		message = (Message)request.getSession().getAttribute("message");
-		request.getSession().removeAttribute("message");
-	}
-
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
@@ -17,6 +11,12 @@
 		// redirect to index/login page
 		response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		return;
+	}
+
+	Message message = null;
+	if (request.getSession().getAttribute("message")!=null) {
+		message = (Message)request.getSession().getAttribute("message");
+		request.getSession().removeAttribute("message");
 	}
 
 	UserDAO userDao = new UserDAO();
@@ -30,7 +30,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>ACME Admin - Maintain User</title>
+	<title>ACME Admin - Maintain Users Security Level</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
@@ -53,7 +53,7 @@
 
 		<ol class="breadcrumb">
 			<li><a href="${pageContext.request.contextPath}/pages/admin/dashboard.jsp">Home</a></li>
-			<li class="active">Maintain User</li>
+			<li class="active">Maintain Users Security Level</li>
 		</ol>
 
 
@@ -74,6 +74,7 @@
 			<th class="col-md-2"><label>Id</label></th>
 			<th class="col-md-6"><label>Username</label></th>
 			<th class="col-md-2"><label>Level</label></th>
+
 			<th class="col-md-2"></th>
 		</tr>
 		<%
@@ -106,6 +107,7 @@
 
 				</select>
 			</td>
+
 			<td></td>
 		</tr>
 		<%
@@ -116,6 +118,7 @@
 			<td></td>
 			<td></td>
 			<td></td>
+
 			<td align="right">
 				<input class="btn btn-default" type="submit" name="update" value="Update" />
 			</td>

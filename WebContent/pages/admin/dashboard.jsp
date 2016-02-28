@@ -4,12 +4,6 @@
 <%
 	// Only admin / SO can access
 
-	Message message = null;
-	if (request.getSession().getAttribute("message")!=null) {
-		message = (Message)request.getSession().getAttribute("message");
-		request.getSession().removeAttribute("message");
-	}
-
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
@@ -17,6 +11,12 @@
 		// redirect to index/login page
 		response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		return;
+	}
+
+	Message message = null;
+	if (request.getSession().getAttribute("message")!=null) {
+		message = (Message)request.getSession().getAttribute("message");
+		request.getSession().removeAttribute("message");
 	}
 
 %>
@@ -60,25 +60,25 @@
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="create_new_users.jsp">Create new users</a>
+				<a href="create_new_users.jsp">Create New User</a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="maintain_user.jsp">Maintain security level of users</a>
+				<a href="maintain_user.jsp">Maintain Users Security Level</a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="maintain_table_security.jsp">Maintain security level of tables</a>
+				<a href="maintain_table_security.jsp">Maintain Tables Security Level</a>
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-12">
-				<a href="view_log.jsp">View logs</a>
+				<a href="view_log.jsp">View Logs</a>
 			</div>
 		</div>
 

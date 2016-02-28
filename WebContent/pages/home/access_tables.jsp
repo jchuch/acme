@@ -4,12 +4,6 @@
 <%
 	// Only normal user can access
 
-	Message message = null;
-	if (request.getSession().getAttribute("message")!=null) {
-		message = (Message)request.getSession().getAttribute("message");
-		request.getSession().removeAttribute("message");
-	}
-
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
@@ -17,6 +11,12 @@
 		// redirect to logout page
 		response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		return;
+	}
+
+	Message message = null;
+	if (request.getSession().getAttribute("message")!=null) {
+		message = (Message)request.getSession().getAttribute("message");
+		request.getSession().removeAttribute("message");
 	}
 
 	TableSecurityDAO tableSecDAO = new TableSecurityDAO();
@@ -30,7 +30,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>ACME Home - Welcome</title>
+	<title>ACME User - Access Tables</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
@@ -52,7 +52,7 @@
 
 		<ol class="breadcrumb">
 			<li><a href="${pageContext.request.contextPath}/pages/home/normal_user_dashboard.jsp">Home</a></li>
-			<li class="active">Access tables</li>
+			<li class="active">Access Tables</li>
 		</ol>
 
 
@@ -72,7 +72,7 @@
 		<tr>
 			<th><label>Id</label></th>
 			<th><label>Name</label></th>
-			<th><label>Level</label></th>
+
 			<th></th>
 		</tr>
 		<%
@@ -83,7 +83,7 @@
 		<tr>
 			<td><label><%= tableSec.getId() %></label></td>
 			<td><label><%= tableSec.getName() %></label></td>
-		
+
 			<td>
 				<input class="btn btn-default" type="submit" name="select_<%= tableSec.getId() %>" value="Select" />
 				<input class="btn btn-default" type="submit" name="insert_<%= tableSec.getId() %>" value="Insert" />

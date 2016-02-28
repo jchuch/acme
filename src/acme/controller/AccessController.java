@@ -72,13 +72,14 @@ public class AccessController extends HttpServlet {
 	}
 
 
+	// action from access_tables.jsp
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		User currentUser = (User)request.getSession().getAttribute("user");
 		if (currentUser==null) {
-			// if user not found in session, redirect to login
-			response.sendRedirect(request.getContextPath()+"/");
+			// if user not found in session, redirect to logout
+			response.sendRedirect(request.getContextPath()+"/logout.jsp");
 			return;
 		}
 
@@ -124,11 +125,6 @@ public class AccessController extends HttpServlet {
 
 		TableSecurity tableSec = tableSecDao.getTableSecurity(Integer.parseInt(tableSecId));
 		String tableLevel = tableSec.getLevel();
-
-
-		// TODO: check access
-		/*System.out.println("user level:" + level);
-		System.out.println("table level:" + tableLevel);*/
 
 
 		Message msg = new Message();
@@ -200,7 +196,8 @@ public class AccessController extends HttpServlet {
 
 		request.getSession().setAttribute("message", msg);
 
-		response.sendRedirect(request.getContextPath()+"/pages/home/welcome.jsp");
+		// redirect to itself
+		response.sendRedirect(request.getContextPath()+"/pages/home/access_tables.jsp");
 	}
 
 

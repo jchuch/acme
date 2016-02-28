@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page import="acme.dbmodel.User,acme.model.Message,acme.util.*" %>
 <%
+	//Only normal user can access
+
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
@@ -25,7 +27,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Create new tables</title>
+	<title>ACME User - Create New Table</title>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
 	<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
@@ -50,7 +52,7 @@
 
         	<ol class="breadcrumb">
 				<li><a href="${pageContext.request.contextPath}/pages/home/normal_user_dashboard.jsp">Home</a></li>
-				<li class="active">Create new tables</li>
+				<li class="active">Create New Table</li>
 			</ol>
 
 
@@ -80,6 +82,7 @@
 					<input class="btn btn-default" type="submit" name="create" value="Create" />
 				</div>
 			</div>
+
 		</form>
 	</div>
 

@@ -4,12 +4,6 @@
 <%
 	// Only admin / SO can access
 
-	Message message = null;
-	if (request.getSession().getAttribute("message")!=null) {
-		message = (Message)request.getSession().getAttribute("message");
-		request.getSession().removeAttribute("message");
-	}
-
 	User user = null;
 	if (request.getSession().getAttribute("user")!=null) {
 		user = (User)request.getSession().getAttribute("user");
@@ -17,6 +11,12 @@
 		// redirect to logout page
 		response.sendRedirect(request.getContextPath()+"/logout.jsp");
 		return;
+	}
+
+	Message message = null;
+	if (request.getSession().getAttribute("message")!=null) {
+		message = (Message)request.getSession().getAttribute("message");
+		request.getSession().removeAttribute("message");
 	}
 
 	LogDAO logDao = new LogDAO();
