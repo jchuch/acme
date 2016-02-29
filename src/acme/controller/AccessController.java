@@ -51,35 +51,35 @@ public class AccessController extends HttpServlet {
 
 	/*
 	the first dimension represents user security level, the second dimension represents table security level;
-	return l represents that the user's security level is higher than the table's security level;
-	s for lower
+	return h represents that the user's security level is higher than the table's security level;
+	l for lower
 	e for equal;
 	i for incompatible;
 	*/
 	private static final char[][] securityLevelMatrix = new char[][]{
-		  { 'e', 's', 's', 's', 's', 's', 's', 's'}, // G
-		  { 'l', 'e', 'i', 'i', 's', 's', 'i', 's'}, // H
-		  { 'l', 'i', 'e', 'i', 's', 'i', 's', 's'}, // F
-		  { 'l', 'i', 'i', 'e', 'i', 's', 's', 's'}, // E
-		  { 'l', 'l', 'l', 'i', 'e', 'i', 'i', 's'}, // HF
-		  { 'l', 'l', 'i', 'l', 'i', 'e', 'i', 's'}, // HE
-		  { 'l', 'i', 'l', 'l', 'i', 'i', 'e', 's'}, // FE
-		  { 'l', 'l', 'l', 'l', 'l', 'l', 'l', 'e'}  // L
-	};
+		  { 'e', 'l', 'l', 'l', 'l', 'l', 'l', 'l'}, // G
+		  { 'h', 'e', 'i', 'i', 'l', 'l', 'i', 'l'}, // H
+		  { 'h', 'i', 'e', 'i', 'l', 'i', 'l', 'l'}, // F
+		  { 'h', 'i', 'i', 'e', 'i', 'l', 'l', 'l'}, // E
+		  { 'h', 'h', 'h', 'i', 'e', 'i', 'i', 'l'}, // HF
+		  { 'h', 'h', 'i', 'h', 'i', 'e', 'i', 'l'}, // HE
+		  { 'h', 'i', 'h', 'h', 'i', 'i', 'e', 'l'}, // FE
+		  { 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'e'}};  // L
+	
 
 	public AccessController() {
 		super();
 	}
 
 
-	// action from access_tables.jsp
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		User currentUser = (User)request.getSession().getAttribute("user");
 		if (currentUser==null) {
-			// if user not found in session, redirect to logout
+			// if user not found in session, redirect to login
 			response.sendRedirect(request.getContextPath()+"/logout.jsp");
+
 			return;
 		}
 
@@ -127,6 +127,11 @@ public class AccessController extends HttpServlet {
 		String tableLevel = tableSec.getLevel();
 
 
+		// TODO: check access
+		/*System.out.println("user level:" + level);
+		System.out.println("table level:" + tableLevel);*/
+
+
 		Message msg = new Message();
 
 		int indexUserLevel = -1;
@@ -147,14 +152,14 @@ public class AccessController extends HttpServlet {
 				char queryResult = securityLevelMatrix[indexUserLevel][indexTableLevel];
 
 				// select
-				if(action == 1 && (queryResult == 'l' || queryResult == 'e')){
+				if(action == 1 && (queryResult == 'h' || queryResult == 'e')){
 					//success operation
 
 					msg.setMsgType("success");
 					msg.setMessage("Operation Success!");
 				}
 				// insert
-				else if(action == 2 && (queryResult == 's' || queryResult == 'e')){
+				else if(action == 2 && (queryResult == 'l' || queryResult == 'e')){
 					//success operation
 
 					msg.setMsgType("success");
@@ -196,7 +201,6 @@ public class AccessController extends HttpServlet {
 
 		request.getSession().setAttribute("message", msg);
 
-		// redirect to itself
 		response.sendRedirect(request.getContextPath()+"/pages/home/access_tables.jsp");
 	}
 
