@@ -26,18 +26,8 @@ public class AccessController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	//private static final ArrayList<String> securityLevelIndex = new ArrayList<String>();
 	private static final HashMap<String,Integer> securityLevelIdx = new HashMap<String,Integer>();
 	static {
-//		securityLevelIndex.add("G");
-//		securityLevelIndex.add("H");
-//		securityLevelIndex.add("F");
-//		securityLevelIndex.add("E");
-//		securityLevelIndex.add("HF");
-//		securityLevelIndex.add("HE");
-//		securityLevelIndex.add("FE");
-//		securityLevelIndex.add("L");
-
 		// (security level, index)
 		securityLevelIdx.put("G", 0);
 		securityLevelIdx.put("H", 1);
@@ -65,21 +55,21 @@ public class AccessController extends HttpServlet {
 		  { 'h', 'h', 'i', 'h', 'i', 'e', 'i', 'l'}, // HE
 		  { 'h', 'i', 'h', 'h', 'i', 'i', 'e', 'l'}, // FE
 		  { 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'e'}};  // L
-	
+
 
 	public AccessController() {
 		super();
 	}
 
 
+	// action from access_tables.jsp
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
 		User currentUser = (User)request.getSession().getAttribute("user");
 		if (currentUser==null) {
-			// if user not found in session, redirect to login
+			// if user not found in session, redirect to logout
 			response.sendRedirect(request.getContextPath()+"/logout.jsp");
-
 			return;
 		}
 
@@ -125,11 +115,6 @@ public class AccessController extends HttpServlet {
 
 		TableSecurity tableSec = tableSecDao.getTableSecurity(Integer.parseInt(tableSecId));
 		String tableLevel = tableSec.getLevel();
-
-
-		// TODO: check access
-		/*System.out.println("user level:" + level);
-		System.out.println("table level:" + tableLevel);*/
 
 
 		Message msg = new Message();
@@ -182,6 +167,7 @@ public class AccessController extends HttpServlet {
 					else if(action==2)
 						operation ="insert";
 
+					// write to log
 			        Log log = new Log();
 			        log.setUserId(currentUser.getId());
 			        log.setOperation(operation);
